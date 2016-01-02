@@ -40,17 +40,20 @@ module.exports = function configurePassport(app, passport) {
     // ----------------------------------------------------------------------------
     // Expanded GitHub auth scope routes
     // ----------------------------------------------------------------------------
-    app.get('/signin/github/increased-scope', function (req, res){
-        if (req.session && req.headers && req.headers.referer) {
-            req.session.referer = req.headers.referer;
-        }  
-        return res.redirect('/auth/github/increased-scope');
-    });
+    app.get('/signin/github/increased-scope', 
+        function (req, res) {
+            if (req.session && req.headers && req.headers.referer) {
+                req.session.referer = req.headers.referer;
+            }
+            return res.redirect('/auth/github/increased-scope');
+        }
+    );
 
     app.get('/auth/github/increased-scope', passport.authorize('expanded-github-scope'));
 
     app.get('/auth/github/callback/increased-scope', 
-        passport.authorize('expanded-github-scope'), function (req, res, next) {
+        passport.authorize('expanded-github-scope'), 
+        function (req, res, next) {
             var account = req.account;
             var user = req.user;
             user.github.increasedScope = account;
