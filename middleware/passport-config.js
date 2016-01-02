@@ -7,7 +7,7 @@ var passport = require('passport');
 var utils = require('../utils');
 
 var GitHubStrategy = require('passport-github').Strategy;
-var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
+var SAMLStrategy = require('passport-saml').Strategy;
 
 module.exports = function (app, config) {
     // ----------------------------------------------------------------------------
@@ -47,22 +47,12 @@ module.exports = function (app, config) {
     }, gitHubTokenToSubset));
 
     // ----------------------------------------------------------------------------
-    // Azure Active Directory Passport session setup.
+    // SAML Passport session setup.
     // ----------------------------------------------------------------------------
-    var aadStrategy = new OIDCStrategy({
-        callbackURL: config.activeDirectory.redirectUrl,
-        realm: config.activeDirectory.tenantId,
-        clientID: config.activeDirectory.clientId,
-        clientSecret: config.activeDirectory.clientSecret,
-        //oidcIssuer: config.creds.issuer,
-        identityMetadata: 'https://login.microsoftonline.com/common/.well-known/openid-configuration',
-        skipUserProfile: true,
-        responseType: 'id_token code',
-        responseMode: 'form_post',
-    }, function (iss, sub, profile, accessToken, refreshToken, done) {
-        done(null, profile);
+    var samlStrategy = new SAMLStrategy(config.saml, function(profile, done) {
+        return done(null, profile)
     });
-    passport.use('azure-active-directory', aadStrategy);
+    passport.use('saml', samlStrategy);
 
   // ----------------------------------------------------------------------------
   // Expanded OAuth-scope GitHub access for org membership writes.

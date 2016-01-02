@@ -42,15 +42,18 @@ module.exports = function translateEnvironmentToConfiguration(env) {
         express: {
             sessionSalt: env.SESSION_SALT
         },
-        // The app uses authentication with Azure Active Directory to grant access 
-        // to the GitHub organization.
-        activeDirectory: {
-            clientId: env.AAD_CLIENT_ID,
-            clientSecret: env.AAD_CLIENT_SECRET,
-            tenantId: env.AAD_TENANT_ID,
-            redirectUrl: env.AAD_REDIRECT_URL,
-            allowTenantGuests: (env.AAD_ALLOW_TENANT_GUESTS && env.AAD_ALLOW_TENANT_GUESTS == 'allow') 
+
+        saml: {
+            protocol: env.SAML_SP_PROTOCOL,
+            host: env.SAML_SP_HOSTNAME,
+            path : env.SAML_SP_CALLBACK,
+            entryPoint : env.SAML_IDP_ENTRY_POINT,
+            issuer : env.SAML_SP_HOSTNAME,
+            // decryptionPvk : ???
+            cert : env.SAML_CERT,
+            privateCert : env.SAML_KEY
         },
+
         // AppInsights is a Microsoft Cloud product for gathering analytics and 
         // other useful information about apps. This app uses the Node.js npm 
         // module for app insights to gather information on server generation 
