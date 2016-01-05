@@ -106,4 +106,13 @@ module.exports = function configurePassport(app, passport) {
         }
         res.redirect('/');
     });
+
+    app.get('/auth/saml/sp-metadata', 
+        function(req, res){
+            res.set('Content-Type', 'text/xml')
+            res.send(
+                passport._strategy('saml').generateServiceProviderMetadata(app.get('runtimeConfig').saml.decryptionCert)
+            );
+        }
+    );
 };

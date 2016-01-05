@@ -44,14 +44,13 @@ module.exports = function translateEnvironmentToConfiguration(env) {
         },
 
         saml: {
-            protocol: env.SAML_SP_PROTOCOL,
-            host: env.SAML_SP_HOSTNAME,
-            path : env.SAML_SP_CALLBACK,
+            callbackUrl: env.SAML_SP_PROTOCOL + env.SAML_SP_HOSTNAME + env.SAML_SP_CALLBACK,
             entryPoint : env.SAML_IDP_ENTRY_POINT,
             issuer : env.SAML_SP_HOSTNAME,
-            // decryptionPvk : ???
-            cert : env.SAML_CERT,
-            privateCert : env.SAML_KEY
+            decryptionCert : env.SAML_CERT, // Certificate for encrypting SAML assertions
+            decryptionPvk : env.SAML_KEY, // Private key for SAML assertion decryption
+            cert : env.SAML_IDP_CERT, // IdP's certificate, for validation
+            privateCert : env.SAML_KEY // Key for signing requests
         },
 
         // AppInsights is a Microsoft Cloud product for gathering analytics and 
