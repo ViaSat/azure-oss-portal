@@ -68,14 +68,15 @@ module.exports = function configurePassport(app, passport) {
     // ----------------------------------------------------------------------------
     // passport integration with Azure Active Directory
     // ----------------------------------------------------------------------------
-    app.get('/auth/azure', passport.authorize('azure-active-directory'));
+    app.get('/auth/saml', passport.authorize('saml'));
 
-    app.post('/auth/azure/callback',
-        passport.authorize('azure-active-directory'), function (req, res, next) {
-            var account = req.account;
-            var username = account._json.upn;
-            if (account !== null && username && account.displayName) {
-                req.user.azure = {
+    app.post('/auth/saml/callback',
+        passport.authorize('saml'),
+        function(profile, next) {
+
+            var username = profile.uid
+            if (profile !== null && username && profile.givenName) {
+                req.user.corp = {
                     displayName: account.displayName,
                     oid: account._json.oid,
                     username: username,
@@ -86,23 +87,24 @@ module.exports = function configurePassport(app, passport) {
                     delete req.session.referer;
                 }
                 return res.redirect(url);
-          } else {
-              return next(new Error('Azure Active Directory authentication failed.'));
-          }
-      });
+            } else {
+              return next(new Error('Corporate-side SAML authentication failed.'));
+            }
+        }
+    );
 
-    app.get('/signin/azure', function(req, res){
+    app.get('/signin/corp', function(req, res){
         if (req.session && req.headers && req.headers.referer) {
             if (req.session.referer === undefined) {
                 req.session.referer = req.headers.referer;
             }
         }
-        return res.redirect('/auth/azure');
+        return res.redirect('/auth/saml');
     });
 
-    app.get('/signout/azure', function(req, res){
-        if (req.user && req.user.azure) {
-            delete req.user.azure;
+    app.get('/signout/corp', function(req, res){
+        if (req.user && req.user.corp) {
+            delete req.user.corp;
         }
         res.redirect('/');
     });
