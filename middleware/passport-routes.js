@@ -72,14 +72,13 @@ module.exports = function configurePassport(app, passport) {
 
     app.post('/auth/saml/callback',
         passport.authorize('saml'),
-        function(profile, next) {
-
-            var username = profile.uid
-            if (profile !== null && username && profile.givenName) {
+        function(req, res, next) {
+            acct = req.account
+            if (acct !== null && acct.sAMAccountName && acct.displayName) {
                 req.user.corp = {
-                    displayName: account.displayName,
-                    oid: account._json.oid,
-                    username: username,
+                    displayName: acct.displayName,
+                    // oid: account._json.oid,
+                    username: acct.sAMAccountName,
                 };
                 var url = '/';
                 if (req.session && req.session.referer) {
@@ -88,7 +87,8 @@ module.exports = function configurePassport(app, passport) {
                 }
                 return res.redirect(url);
             } else {
-              return next(new Error('Corporate-side SAML authentication failed.'));
+                // console.log(next)
+                throw new Error('Corporate-side SAML authentication failed.');
             }
         }
     );

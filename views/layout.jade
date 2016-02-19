@@ -96,18 +96,18 @@ html(lang="en")
                     h4 Your #{config && config.companyName ? config.companyName : 'Corporate'} Identity
                     p
                       if ossLink.aadname
-                        a.btn.btn-sm.btn-muted(href='/signin/azure')= ossLink.aadname
-                      a.btn.btn-sm.btn-muted-more(href='/signin/azure')= ossLink.aadupn
+                        a.btn.btn-sm.btn-muted(href='/signin/corp')= ossLink.aadname
+                      a.btn.btn-sm.btn-muted-more(href='/signin/corp')= ossLink.aadupn
                       a.btn.btn-sm.btn-white(href='/link/update', style='margin-left:10px') Change
-                  else if user.azure
+                  else if user.corp
                     //- NOTE: This is actually visually backward from the above link display...
                     h4 Your #{config && config.companyName ? config.companyName : 'Corporate'} Identity
                     p
-                      if user.azure.username
-                        a.btn.btn-sm.btn-muted(href='/signout/azure')= user.azure.username
-                      if user.azure.displayName
-                        a.btn.btn-sm.btn-muted-more(href='/signout/azure')= user.azure.displayName
-                      a.btn.btn-sm.btn-white(href='/signout/azure', style='margin-left:10px') Sign Out
+                      if user.corp.username
+                        a.btn.btn-sm.btn-muted(href='/signout/corp')= user.corp.username
+                      if user.corp.displayName
+                        a.btn.btn-sm.btn-muted-more(href='/signout/corp')= user.corp.displayName
+                      a.btn.btn-sm.btn-white(href='/signout/corp', style='margin-left:10px') Sign Out
     //- Just show breadcrumbs when there is an interesting path available
     if showBreadcrumbs === true && breadcrumbs && breadcrumbs.length && breadcrumbs.length > 1
       div.container

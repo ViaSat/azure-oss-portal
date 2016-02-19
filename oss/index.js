@@ -39,7 +39,7 @@ function OpenSourceUserContext (applicationConfiguration, dataClient, user, redi
     this.safeConfigurationTemp = safeSettings(applicationConfiguration);
     this.authenticated = {
         github: user && user.github && user.github.id,
-        azure: user && user.azure && user.azure.username,
+        corp: user && user.corp && user.corp.username,
     };
     this.entities = {
         link: null,
@@ -47,7 +47,7 @@ function OpenSourceUserContext (applicationConfiguration, dataClient, user, redi
     };
     this.usernames = {
         github: user && user.github && user.github.username ? user.github.username : undefined,
-        azure: user && user.azure && user.azure.username ? user.azure.username : undefined,
+        corp: user && user.corp && user.corp.username ? user.corp.username : undefined,
     };
     this.id = {
         github: user && user.github && user.github.id ? user.github.id.toString() : undefined,

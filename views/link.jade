@@ -27,10 +27,10 @@ block content
           tbody
             tr
               td= user.github.displayUsernameTemporary || user.github.username
-              td= user.azure.username
+              td= user.corp.username
         p By continuing, you agree:
         ul
-          li My GitHub account is controlled exclusively by #{user.azure.username}.
+          li My GitHub account is controlled exclusively by #{user.corp.username}.
           li My GitHub password is safe, secure and smart.
           li I will enable two-factor authentication on the account and keep it active. I understand that I will lose access if I remove this security protection.
         form(method='post')

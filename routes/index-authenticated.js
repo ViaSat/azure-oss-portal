@@ -45,14 +45,14 @@ router.get('/', function (req, res, next) {
     var config = req.app.settings.runtimeConfig;
     var onboarding = req.query.onboarding !== undefined;
     var allowCaching = onboarding ? false : true;
-    if (!link && req.user.azure === undefined) {
+    if (!link && req.user.corp === undefined) {
         return oss.render(req, res, 'welcome', 'Welcome');
     }
-    if (!link && req.user.azure && req.user.azure.oid) {
+    if (!link && req.user.corp && req.user.corp.username) {
         return res.redirect('/link');
     }
     // They're changing their corporate identity (rare, often just service accounts)
-    if (link && link.aadupn && req.user.azure && req.user.azure.username && req.user.azure.username.toLowerCase() !== link.aadupn.toLowerCase()) {
+    if (link && link.aadupn && req.user.corp && req.user.corp.username && req.user.corp.username.toLowerCase() !== link.aadupn.toLowerCase()) {
         return res.redirect('/link/update');
     }
     var twoFactorOff = null;

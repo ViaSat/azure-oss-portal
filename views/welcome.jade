@@ -11,7 +11,7 @@ block content
       div.col-md-6.col-lg-6.col-sm-6
         h1 Hi, #{user.github.displayName || user.github.username}
         h2 #{config.companyName} employees & vendors
-        p.lead To join the organization, please authenticate with Azure Active Directory to continue.
+        p.lead To join the organization, please authenticate with your corporate credentials to continue.
         p
           a.btn.btn-primary(href='/signin/corp') Sign in to #{config.companyName}
         p The initial sign-up process should take <strong>2-15 minutes</strong>, depending on how your GitHub account is configured and your familiarity with modern multi-factor authentication as required by #{config.companyName} corporate policy for securing credentials.

@@ -88,8 +88,8 @@ DataClient.prototype.requestToUserInformation = function rtui(req, storeFullUser
             info.ghu = req.user.github.username;
         }
     }
-    if (req && req.user && req.user.azure && req.user.azure.username) {
-        info.aad = req.user.azure.username;
+    if (req && req.user && req.user.corp && req.user.corp.username) {
+        info.aad = req.user.corp.username;
     }
     return info;
 };
@@ -321,13 +321,13 @@ DataClient.prototype.createEntity = function ce(partitionKey, rowKey, obj, callb
 // -----
 // CONSIDER: Replace link calls with reduced entity "association" calls, then depre. & remove these funcs.
 DataClient.prototype.createLinkObjectFromRequest = function createLinkObject(req, callback) {
-	if (req && req.user && req.user.github && req.user.azure && req.user.github.username && req.user.github.id && req.user.azure.username && req.user.azure.oid) {
+	if (req && req.user && req.user.github && req.user.corp && req.user.github.username && req.user.github.id && req.user.corp.username && req.user.corp) {
 		return callback(null, {
 			ghu: req.user.github.username,
 			ghid: req.user.github.id.toString(),
-			aadupn: req.user.azure.username,
-			aadname: req.user.azure.displayName,
-			aadoid: req.user.azure.oid,
+			aadupn: req.user.corp.username,
+			aadname: req.user.corp.displayName,
+			// aadoid: req.user.azure.oid,
 			joined: new Date().getTime()
 		});
 	} else {

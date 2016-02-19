@@ -9,11 +9,11 @@ var utils = require('../utils');
 
 router.get('/', function (req, res, next) {
     var oss = req.oss;
-    if (!(oss.usernames.azure && oss.usernames.github)) {
+    if (!(oss.usernames.corp && oss.usernames.github)) {
         return next(new Error('You must be signed in to both Active Directory and your GitHub account in order to link your account.'));
     }
     if (!req.oss.entities.link) {
-        req.oss.render(req, res, 'link', 'Link GitHub with corporate identity ' + req.oss.usernames.azure);
+        req.oss.render(req, res, 'link', 'Link GitHub with corporate identity ' + req.oss.usernames.corp);
     } else {
         return res.redirect('/');
     }
@@ -46,7 +46,7 @@ router.post('/', function (req, res, next) {
 
 router.get('/update', function (req, res, next) {
     var oss = req.oss;
-    if (!(oss.usernames.azure)) {
+    if (!(oss.usernames.corp)) {
         return oss.render(req, res, 'linkUpdate', 'Update your account ' + oss.usernames.github + ' by signing in with corporate credentials.');
     }
     var dc = req.app.settings.dataclient;
