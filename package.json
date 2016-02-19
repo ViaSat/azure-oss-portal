@@ -23,7 +23,7 @@
     "jshint": "jshint ."
   },
   "engines": {
-    "node": "~4.2.1"
+    "node": "~5.6.0"
   },
   "dependencies": {
     "applicationinsights": "^0.12.5",
