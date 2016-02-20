@@ -30,9 +30,9 @@ module.exports = function initMiddleware(app, express, config, dirname, redisCli
 
     app.use(require('./scrubbedUrl'));
     app.use(require('./logger'));
-    if (process.env.WEBSITE_SKU) {
-        app.use(require('./requireSecureAppService'));
-    }
+    // if (process.env.WEBSITE_SKU) {
+    //     app.use(require('./requireSecureAppService'));
+    // }
     app.use(require('./correlationId'));
     app.use(require('./locals'));
 

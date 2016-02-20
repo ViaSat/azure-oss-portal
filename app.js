@@ -17,6 +17,7 @@ app.initializeApplication = function init(config, callback) {
         auth_pass: config.redis.key,
     };
     if (config.redis.tls) {
+        config.redis.host = config.redis.tls
         redisOptions.tls = {
             servername: config.redis.tls,
         };
