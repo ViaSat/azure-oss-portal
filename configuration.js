@@ -47,10 +47,10 @@ module.exports = function translateEnvironmentToConfiguration(env) {
             callbackUrl: env.SAML_SP_PROTOCOL + env.SAML_SP_HOSTNAME + env.SAML_SP_CALLBACK,
             entryPoint : env.SAML_IDP_ENTRY_POINT,
             issuer : env.SAML_SP_HOSTNAME,
-            decryptionCert : env.SAML_CERT, // Certificate for encrypting SAML assertions
+            decryptionCert : env.SAML_CERT, // Certificate we tell the IdP to use for encrypting SAML assertions
             decryptionPvk : env.SAML_KEY, // Private key for SAML assertion decryption
-            cert : env.SAML_IDP_CERT, // IdP's certificate, for validation
-            privateCert : env.SAML_KEY // Key for signing requests
+            cert : env.SAML_IDP_CERT, // Certificate we use to validate IdP's response; from IdP metadata
+            privateCert : env.SAML_KEY // Key for signing requests we send to the IdP
         },
 
         // AppInsights is a Microsoft Cloud product for gathering analytics and 
@@ -98,6 +98,9 @@ module.exports = function translateEnvironmentToConfiguration(env) {
             contributeBaseUrl : env.DOCUMENTATION_CONTRIBUTE_BASE_URL || 'https://github.com/Azure/azureopensource-portal/blob/master/%s'
         }
     };
+
+    console.log(config)
+
     for (i = 1; env['GITHUB_ORG' + i + '_NAME']; i++) {
         var prefix = 'GITHUB_ORG' + i + '_';
         var onboarding = env[prefix + 'ONBOARDING'];
